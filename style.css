@@ -9,13 +9,16 @@ svg {
 
 .control {
     border-radius: 2.5px;
-    background-color: grey;
+    font-weight: bold;
     color: white;
+}
+
+body {
+    background-color: #292924;
 }
 
 #rowOne {
     height: 100%;
-    border: 1px solid black;
     position: relative;
 }
 
@@ -24,7 +27,6 @@ svg {
     width: 50%;
     float: left;
     position: relative;
-    border: 1px solid black;
 }
 
 .gameTag {
@@ -51,7 +53,6 @@ svg {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    border: 1px solid black;
 }
 
 #columnTwo {
@@ -59,11 +60,12 @@ svg {
     top: 50%;
     left: 50%;
     transform: translateY(-50%);
-    border: 1px solid black;
 }
 
 h1, p {
+    font-family: niceFont; 
     text-align: center;
+    color: white;
 }
 
 #canvas {
