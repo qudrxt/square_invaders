@@ -13,6 +13,20 @@ svg {
     color: white;
 }
 
+#rowOne {
+    height: 100%;
+    border: 1px solid black;
+    position: relative;
+}
+
+#rowTwo {
+    height: 100%;
+    width: 50%;
+    float: left;
+    position: relative;
+    border: 1px solid black;
+}
+
 .gameTag {
     font-family: niceFont; 
     fill: white;
@@ -31,13 +45,24 @@ svg {
     box-sizing: border-box;
 }
 
-.column {
-    float: left;
-    width: 50%;
+#columnOne {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     border: 1px solid black;
 }
 
-.column h1, p {
+#columnTwo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    border: 1px solid black;
+}
+
+h1, p {
     text-align: center;
 }
 
@@ -46,7 +71,7 @@ svg {
     margin: auto;
 }
 
-.row:after {
+#row:after {
     content: "";
     display: table;
     clear: both;

@@ -5,15 +5,17 @@
         <script src = "./dist/spaceinvaders.js"></script>
     </head>
     <body>
-        <div class = "row">
-            <div class = "column">
-                <h1>Space Invaders</h1>
-                <p id = "controlsLabel">Controls -</p>
-                <p>Move left <span class = "control">ArrowLeft</span></p>
-                <p>Move right <span class = "control">ArrowRight</span></p>
-                <p>Shoot <span class = "control">Space</span></p>
+        <div id = "rowOne">
+            <div id = "rowTwo">
+                <div id = "columnOne">
+                    <h1>Space Invaders</h1>
+                    <p id = "controlsLabel">Controls -</p>
+                    <p>Move left <span class = "control">ArrowLeft</span></p>
+                    <p>Move right <span class = "control">ArrowRight</span></p>
+                    <p>Shoot <span class = "control">Space</span></p>
+                </div>
             </div>
-            <div class = "column">
+            <div id = "columnTwo">
                 <svg id = "canvas" width = "600" height = "600">
                     <text id = "gameScore" class = "gameTag" x = "10" y = "25">Score | 0</text>
                     <text id = "playerLives" class = "gameTag" x = "10" y = "585">Lives | 3</text>
