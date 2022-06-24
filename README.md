@@ -12,4 +12,5 @@ Developed with the TypeScript language and the functional reactive programming p
 
 ## Contribution ## 
 * Suggest processing changes
+* Implement pure RNG to replace *Math.random()* usage
 * Report bugs
