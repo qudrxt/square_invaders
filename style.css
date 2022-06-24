@@ -26,3 +26,7 @@ svg {
     font-family: niceFont; 
     fill: white;
 }
+
+#player {
+    fill: blue;
+}
