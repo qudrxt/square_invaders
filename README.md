@@ -11,6 +11,6 @@ Developed with the TypeScript language and the functional reactive programming p
 * Load `sqaureinvaders.html`
 
 ## Contribution ## 
-* Implement pure RNG to replace *Math.random()* usage
-* Suggest processing changes
 * Report bugs
+* Suggest processing changes
+* Implement pure RNG to replace *Math.random()* usage
