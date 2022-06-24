@@ -34,7 +34,16 @@ svg {
 .column {
     float: left;
     width: 50%;
-    padding: 10px;
+    border: 1px solid black;
+}
+
+.column h1, p {
+    text-align: center;
+}
+
+#canvas {
+    display: block;
+    margin: auto;
 }
 
 .row:after {
