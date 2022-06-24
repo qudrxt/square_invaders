@@ -30,3 +30,8 @@ svg {
 #player {
     fill: blue;
 }
+
+#controlsLabel {
+    font-family: niceFont; 
+    font-weight: bold;
+}
