@@ -70,9 +70,3 @@ h1, p {
     display: block;
     margin: auto;
 }
-
-#row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
