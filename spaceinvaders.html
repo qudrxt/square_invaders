@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <style>
+            @import url(style.css);
+            p.highlight {
+                color: red;
+            }
+
+            svg {
+                background-color: #292924;
+            }
+
+            @font-face {
+                font-family: "niceFont";
+                src: url("\TafelSansPro-Light.ttf");
+            }
+
+            .control {
+                border-radius: 2.5px;
+                background-color: grey;
+                color: white;
+            }
+        </style>
+        <script src="./dist/spaceinvaders.js"></script>
+    </head>
+    <body>
+        <h1>Space Invaders</h1>
+        <svg id = "canvas" width="600" height="600">
+            <text id = "gameScore" x = "10" y = "25" style = "font-family: niceFont; fill: white">Score | 0</text>
+            <text id = "playerLives" x = "10" y = "585" style = "font-family: niceFont; fill: white">Lives | 3</text>
+            <rect id = "player" width = "40" height = "40" style = "fill: blue" transform="translate(280, 525)"/>
+            <g id = "shotGroup"/>
+        </svg>
+        
+        <p style = "font-family: niceFont; font-weight: bold;">Controls -</p>
+        <p>Move left <span class = "control">ArrowLeft</span></p>
+        <p>Move right <span class = "control">ArrowRight</span></p>
+        <p>Shoot <span class = "control">Space</span></p>
+    </body>
+</html>
