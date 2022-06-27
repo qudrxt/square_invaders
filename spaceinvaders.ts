@@ -115,7 +115,7 @@ function spaceinvaders() {
   setAliens(initState)
 
   function setAliens(curState: State) {
-    flatMap(curState.activeAliens, iComb).forEach((subBody: Body) => createElement(subBody, enemyColour))
+    curState.activeAliens.flat().forEach((subBody: Body) => createElement(subBody, enemyColour))
   }
 
   function createAliens() {
