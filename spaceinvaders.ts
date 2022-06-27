@@ -174,10 +174,9 @@ function spaceinvaders() {
 
     // check if all the Aliens had been defeated
 
-    curState.resetAliens ?
+    if (curState.resetAliens) {
       setAliens(curState)
-    :
-      null
+    }
 
     // Check if all Aliens have been defeated
 
