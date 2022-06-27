@@ -48,7 +48,6 @@ function spaceinvaders() {
   }>
 
   const 
-    iComb = <T>(i: T) => i,
     notNull = <T>(subValue: T) => subValue != null,
     playerId = 0,
     pShotWidth = 2,
@@ -122,10 +121,6 @@ function spaceinvaders() {
     return [0, 1, 2].map(yInc => createAlienCoords(0, yInc, []).map((cordList: ReadonlyArray<number>) => createBody(null, cordList[0], cordList[1], playerWidth, playerHeight, Number(String(cordList[0]) + String(cordList[1])))))
   }
 
-  function flatMap(inpList, flatFunc) {
-    return inpList.reduce((accList, subEle) => accList.concat(flatFunc(subEle)), [])
-  }
-
   function createPShotBody(curState: State): Body {
 
     // xPos centers the Shot between the Player, yPos elevates the Shot above the Player
@@ -185,7 +180,7 @@ function spaceinvaders() {
     // Check if all Aliens have been defeated
 
     const
-      nextRound = flatMap(curState.activeAliens, iComb).filter(notNull).length == 0
+      nextRound = curState.activeAliens.flat().filter(notNull).length == 0
     
     // Player's position is updated in this function
 
@@ -350,9 +345,9 @@ function spaceinvaders() {
 
   function resetAlienBoundaries(curState: State): State {
     const
-      flatList = flatMap(curState.activeAliens, iComb),
-      lMostAlien = findBoundary(flatList.slice(1), flatList[0], "<"),
-      rMostAlien = findBoundary(flatList.slice(1), flatList[0], ">")
+      enemyList = curState.activeAliens.flat(),
+      lMostAlien = findBoundary(enemyList.slice(1), enemyList[0], "<"),
+      rMostAlien = findBoundary(enemyList.slice(1), enemyList[0], ">")
 
     return {
       ...curState,
@@ -537,11 +532,11 @@ function spaceinvaders() {
       checkTruth = (accBoo: boolean, curBoo: boolean) => accBoo || curBoo,
       shieldSubmerge = ([eBody, sBody]) => collisionFormula([eBody.xPos, eBody.yPos], [sBody.xPos, sBody.yPos], sBody.bodyHeight, sBody.bodyWidth),
       notNullAliens = curState.activeAliens.map(subAlienList => subAlienList.filter(notNull)),
-      allAliensAndShots = flatMap(curState.activePShots.map(aShot => cartesianProduct(aShot, flatMap(notNullAliens, iComb))), iComb),
-      allShotsAndShots = flatMap(curState.activePShots.map(aShot => cartesianProduct(aShot, curState.activeEShots)), iComb),
-      allPShotsAndShields = flatMap(curState.gameShields.map(aShield => cartesianProduct(aShield, curState.activePShots)), iComb),
-      allEShotsAndShields = flatMap(curState.gameShields.map(aShield => cartesianProduct(aShield, curState.activeEShots)), iComb),
-      allAliensAndShields = flatMap(notNullAliens.map(alienList => curState.gameShields.map(aShield => cartesianProduct(aShield, alienList))), iComb)
+      allAliensAndShots = curState.activePShots.map(aShot => cartesianProduct(aShot, notNullAliens.flat())).flat(),
+      allShotsAndShots = curState.activePShots.map(aShot => cartesianProduct(aShot, curState.activeEShots)).flat(),
+      allPShotsAndShields = curState.gameShields.map(aShield => cartesianProduct(aShield, curState.activePShots)).flat(),
+      allEShotsAndShields = curState.gameShields.map(aShield => cartesianProduct(aShield, curState.activeEShots)).flat(),
+      allAliensAndShields = notNullAliens.map(alienList => curState.gameShields.map(aShield => cartesianProduct(aShield, alienList))).flat()
 
     const 
       collidedAliensAndShots = allAliensAndShots.filter(bodiesCollided),
@@ -550,7 +545,7 @@ function spaceinvaders() {
       collidedEShotsOnPlayer = curState.activeEShots.filter(shotBody => bodiesCollided([curState.statePlayer, shotBody])),
       collidedShotsAndShots = allShotsAndShots.filter(bodiesCollided),
       collidedPShotsOnShields = allPShotsAndShields.filter(([aShot, aShield]) => bodiesCollided([aShot, aShield.shieldBody])).map(([pShot, _]) => pShot),
-      fCollidedAliensAndShields = flatMap(allAliensAndShields.map(subList  => subList.filter(([anAlien, aShield]) => shieldSubmerge([anAlien, aShield.shieldBody]))), iComb).filter(duoList => duoList.length > 0),
+      fCollidedAliensAndShields = allAliensAndShields.map(subList => subList.filter(([anAlien, aShield]) => shieldSubmerge([anAlien, aShield.shieldBody]))).flat().filter(duoList => duoList.length > 0),
       pCollidedAliensAndShields = allAliensAndShields.map(subList => subList.filter(([anAlien, aShield]) => shieldSubmerge([aShield.shieldBody, anAlien]))).filter(duoList => duoList.length > 0),
       
       // Check for Shots that the Shield(s) have never experinced 
