@@ -619,24 +619,12 @@ function spaceinvaders() {
     notAvailShields.filter(subShield => subShield != undefined).forEach(aShield => removeElement(aShield.shieldBody))
 
     // Change the colour of the player if it has been hit
-
-    const
-      playerColour =
-        collidedEShotsOnPlayer.length > 0 ?
-          curState.playerLives == 3 ?
-            twoLivesColour
-          :
-          curState.playerLives == 2 ?
-            oneLifeColour
-          :
-            deadColour
-        :
-          null
           
-    collidedEShotsOnPlayer.length > 0 ?
+    if (collidedEShotsOnPlayer.length > 0) {
+      const playerColour = curState.playerLives == 3 ? twoLivesColour : curState.playerLives == 2 ? oneLifeColour : deadColour
+
       altElementColour(playerEleId, playerColour)
-    :
-      null
+    }
 
     // Shields can be hit multiple times at once - ensure that the most up-to-date shield is included
     
