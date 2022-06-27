@@ -500,12 +500,15 @@ function spaceinvaders() {
     createdElement.setAttribute("width", String(elementBody.bodyWidth))
     createdElement.setAttribute("height", String(elementBody.bodyHeight))
     createdElement.setAttribute("id", String(elementBody.bodyId))
-    createdElement.setAttribute("transform", `translate(${elementBody.xPos}, ${elementBody.yPos - yInc})`)
+    createdElement.setAttribute("transform", `translate(${elementBody.xPos}, ${elementBody.yPos - yInc})`) 
 
-    prePend ? 
+    if (prePend) {
       parentNode.before(createdElement)
-    :
+    }
+    
+    else {
       parentNode.appendChild(createdElement)
+    }
   }
 
   function updateElement(inpBody: Body): void {
