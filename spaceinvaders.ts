@@ -541,17 +541,17 @@ function spaceinvaders() {
 
     const 
       collidedAliensAndShots = allAliensAndShots.filter(bodiesCollided),
-      collidedAliens = collidedAliensAndShots.map(([alienBody, _]) => alienBody),
+      collidedAliens = collidedAliensAndShots.map(([alienBody, _]: [Body, Body]) => alienBody),
       collidedPShots = collidedAliensAndShots.map(([_, shotBody]) => shotBody),
       collidedEShotsOnPlayer = curState.activeEShots.filter(shotBody => bodiesCollided([curState.statePlayer, shotBody])),
       collidedShotsAndShots = allShotsAndShots.filter(bodiesCollided),
-      collidedPShotsOnShields = allPShotsAndShields.filter(([aShot, aShield]) => bodiesCollided([aShot, aShield.shieldBody])).map(([pShot, _]) => pShot),
-      fCollidedAliensAndShields = allAliensAndShields.map(subList => subList.filter(([anAlien, aShield]) => shieldSubmerge([anAlien, aShield.shieldBody]))).flat().filter(duoList => duoList.length > 0),
-      pCollidedAliensAndShields = allAliensAndShields.map(subList => subList.filter(([anAlien, aShield]) => shieldSubmerge([aShield.shieldBody, anAlien]))).filter(duoList => duoList.length > 0),
+      collidedPShotsOnShields = allPShotsAndShields.filter(([aShot, aShield]: [Body, Shield]) => bodiesCollided([aShot, aShield.shieldBody])).map(([pShot, _]) => pShot),
+      fCollidedAliensAndShields = allAliensAndShields.map(subList => subList.filter(([anAlien, aShield]: [Body, Shield]) => shieldSubmerge([anAlien, aShield.shieldBody]))).flat().filter(duoList => duoList.length > 0),
+      pCollidedAliensAndShields = allAliensAndShields.map(subList => subList.filter(([anAlien, aShield]: [Body, Shield]) => shieldSubmerge([aShield.shieldBody, anAlien]))).filter(duoList => duoList.length > 0),
       
       // Check for Shots that the Shield(s) have never experinced 
 
-      collidedEShotsAndShields = allEShotsAndShields.filter(([aShot, aShield]) => bodiesCollided([aShot, aShield.shieldBody])).filter((subList: [Body, Shield]) => !checkPrevShieldHit(subList)),
+      collidedEShotsAndShields = allEShotsAndShields.filter(([aShot, aShield]: [Body, Shield]) => bodiesCollided([aShot, aShield.shieldBody])).filter((subList: [Body, Shield]) => !checkPrevShieldHit(subList)),
       collidedEShotsOnShields = collidedEShotsAndShields.map(([colShot, _]) => colShot)
 
     // Determine all the non-collided alien(s) and shot(s)
@@ -578,11 +578,11 @@ function spaceinvaders() {
 
     // Mark all of the Shields that have partially collided with the Aliens(s) with a darker shade of green
 
-    pCollidedAliensAndShields.forEach(subList => subList.forEach(([_, aShield]) => altElementColour(String(aShield.shieldBody.bodyId), touchedShieldColour)))
+    pCollidedAliensAndShields.forEach(subList => subList.forEach(([_, aShield]: [Body, Shield]) => altElementColour(String(aShield.shieldBody.bodyId), touchedShieldColour)))
 
     // Remove all of the Player's shots that have collided with Shield(s)
 
-    collidedPShotsOnShields.forEach(pShot => removeElement(pShot))
+    collidedPShotsOnShields.forEach((pShot: Body) => removeElement(pShot))
 
     // Mark all Alien shots that have collided with the Shield(s)
 
@@ -591,7 +591,7 @@ function spaceinvaders() {
     // Add the coordinates of the Shot(s) that have collided with a Shield for future disregard
 
     const
-      markedShields = collidedEShotsAndShields.map(([colShot, colShield]) => addShotCoord(colShield, colShot)).reverse(),
+      markedShields = collidedEShotsAndShields.map(([colShot, colShield]: [Body, Shield]) => addShotCoord(colShield, colShot)).reverse(),
 
       // Remove duplicates and fully covered shields from markedShields
 
