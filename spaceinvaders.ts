@@ -48,34 +48,34 @@ function spaceinvaders() {
   }>
 
   const 
-    I_COMB = <T>(i: T) => i,
-    NOT_NULL = <T>(subValue: T) => subValue != null,
-    PLAYER_Id = 0,
-    P_SHOT_WIDTH = 2,
-    P_SHOT_HEIGHT = 15,
-    E_SHOT_WIDTH = 3,
-    E_SHOT_HEIGHT = 35,
-    SHIELD_WIDTH = 80,
-    SHIELD_HEIGHT = 50,
-    TWO_LIVES_COLOUR = "#000099",
-    ONE_LIFE_COLOUR = "#00004d",
-    DEAD_COLOUR = "#292924",
-    SVG_CANVAS = document.getElementById("canvas")!,
-    SHOT_GROUP = document.getElementById("shotGroup"),
-    GAME_SCORE = document.getElementById("gameScore")!,
-    PLAYER_LIVES = document.getElementById("playerLives")!,
-    CANVAS_WIDTH = Number(document.getElementById("canvas").getAttribute("width")),
-    CANVAS_HEIGHT = Number(document.getElementById("canvas").getAttribute("height")),
-    PLAYER_ELE = document.getElementById("player")!,
-    PLAYER_WIDTH = Number(PLAYER_ELE.getAttribute("width")),
-    PLAYER_HEIGHT = Number(PLAYER_ELE.getAttribute("height")),
-    VIS_LEFT_BOUND = 0,
-    VIS_RIGHT_BOUND = 560,
-    P_LEFT_BOUND = -PLAYER_WIDTH,
-    P_RIGHT_BOUND = CANVAS_WIDTH + PLAYER_WIDTH,
+    iComb = <T>(i: T) => i,
+    notNull = <T>(subValue: T) => subValue != null,
+    playerId = 0,
+    pShotWidth = 2,
+    pShotHeight = 15,
+    eShotWidth = 3,
+    eShotHeight = 35,
+    shieldWidth = 80,
+    shieldHeight = 50,
+    twoLivesColour = "#000099",
+    oneLifeColour = "#00004d",
+    deadColour = "#292924",
+    svgCanvas = document.getElementById("canvas")!,
+    shotGroup = document.getElementById("shotGroup"),
+    gameScore = document.getElementById("gameScore")!,
+    playerLives = document.getElementById("playerLives")!,
+    canvasWidth = Number(document.getElementById("canvas").getAttribute("width")),
+    canvasHeight = Number(document.getElementById("canvas").getAttribute("height")),
+    playerEle = document.getElementById("player")!,
+    playerWidth = Number(playerEle.getAttribute("width")),
+    playerHeight = Number(playerEle.getAttribute("height")),
+    canvasLeftBound = 0,
+    canvasRightBound = 560,
+    playerLeftBound = -playerWidth,
+    playerRightBound = canvasWidth + playerWidth,
 
     initState: State = { 
-      statePlayer: createBody(null, 280, 535, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_Id),
+      statePlayer: createBody(null, 280, 535, playerWidth, playerHeight, playerId),
       activePShots: [],
       expiredPShots: [],
       activeAliens: createAliens(),
@@ -84,7 +84,7 @@ function spaceinvaders() {
       bottomAliens: null,
       leftMostAlien: null,
       rightMostAlien: null,
-      gameShields: [createBody(null, 50, 425, SHIELD_WIDTH, SHIELD_HEIGHT, 1), createBody(null, 190, 425, SHIELD_WIDTH, SHIELD_HEIGHT, 2), createBody(null, 330, 425, SHIELD_WIDTH, SHIELD_HEIGHT, 3), createBody(null, 470, 425, SHIELD_WIDTH, SHIELD_HEIGHT, 4)].map(createShield),
+      gameShields: [createBody(null, 50, 425, shieldWidth, shieldHeight, 1), createBody(null, 190, 425, shieldWidth, shieldHeight, 2), createBody(null, 330, 425, shieldWidth, shieldHeight, 3), createBody(null, 470, 425, shieldWidth, shieldHeight, 4)].map(createShield),
       emenyLatDirection: 1,
       alienDownShift: false,
       idSequence: 5,
@@ -105,18 +105,18 @@ function spaceinvaders() {
     
   // Create the shield elements onto the screen
 
-  initState.gameShields.forEach(gameShield => createElement(gameShield.shieldBody, "#00ff00", 0, SHOT_GROUP, true))
+  initState.gameShields.forEach(gameShield => createElement(gameShield.shieldBody, "#00ff00", 0, shotGroup, true))
 
   // Create the uncreated 'Alien' elements onto the document
   
   setAliens(initState)
 
   function setAliens(curState: State) {
-    flatMap(curState.activeAliens, I_COMB).forEach((subBody: Body) => createElement(subBody, "red"))
+    flatMap(curState.activeAliens, iComb).forEach((subBody: Body) => createElement(subBody, "red"))
   }
 
   function createAliens() {
-    return [0, 1, 2].map(yInc => createAlienCoords(0, yInc, []).map((cordList: ReadonlyArray<number>) => createBody(null, cordList[0], cordList[1], PLAYER_WIDTH, PLAYER_HEIGHT, Number(String(cordList[0]) + String(cordList[1])))))
+    return [0, 1, 2].map(yInc => createAlienCoords(0, yInc, []).map((cordList: ReadonlyArray<number>) => createBody(null, cordList[0], cordList[1], playerWidth, playerHeight, Number(String(cordList[0]) + String(cordList[1])))))
   }
 
   function flatMap(inpList, flatFunc) {
@@ -127,10 +127,10 @@ function spaceinvaders() {
 
     // xPos centers the Shot between the Player, yPos elevates the Shot above the Player
 
-    const xPos = curState.statePlayer.xPos + PLAYER_WIDTH / 2 - P_SHOT_WIDTH / 2,
+    const xPos = curState.statePlayer.xPos + playerWidth / 2 - pShotWidth / 2,
           yPos = curState.statePlayer.yPos - 5
 
-    return createBody(curState, xPos, yPos, P_SHOT_WIDTH, P_SHOT_HEIGHT, null)
+    return createBody(curState, xPos, yPos, pShotWidth, pShotHeight, null)
   }
 
   function createAlienCoords(xInc: number, yInc: number, coordList: ReadonlyArray<ReadonlyArray<number>>) {
@@ -182,7 +182,7 @@ function spaceinvaders() {
     // Check if all Aliens have been defeated
 
     const
-      nextRound = flatMap(curState.activeAliens, I_COMB).filter(NOT_NULL).length == 0
+      nextRound = flatMap(curState.activeAliens, iComb).filter(notNull).length == 0
     
     // Player's position is updated in this function
 
@@ -223,12 +223,12 @@ function spaceinvaders() {
 
     const 
       shotChance = Math.random(),
-      xPos = closestAlien ? closestAlien.xPos + closestAlien.bodyWidth / 2 - E_SHOT_WIDTH / 2 : null,
+      xPos = closestAlien ? closestAlien.xPos + closestAlien.bodyWidth / 2 - eShotWidth / 2 : null,
       yPos = closestAlien ? closestAlien.yPos + closestAlien.bodyHeight : null
 
     // There is a 1% chance for an Alien to shoot
 
-    return shotChance <= 0.01 ? closestAlien ? createBody(curState, xPos, yPos, E_SHOT_WIDTH, E_SHOT_HEIGHT, null) : null : null
+    return shotChance <= 0.01 ? closestAlien ? createBody(curState, xPos, yPos, eShotWidth, eShotHeight, null) : null : null
   }
 
   function incrementId(inpState: State): State {
@@ -268,7 +268,7 @@ function spaceinvaders() {
       // Check if the Shot body has surpassed the top of the screen
 
       pShotPredicate = (shotBody: Body) => (shotBody.yPos + shotBody.bodyHeight < 0),
-      eShotPredicate = (shotBody: Body) => (shotBody.yPos > CANVAS_HEIGHT),
+      eShotPredicate = (shotBody: Body) => (shotBody.yPos > canvasHeight),
       expPShots = curState.activePShots.filter(pShotPredicate),
       expEShots = curState.activeEShots.filter(eShotPredicate),
 
@@ -324,7 +324,7 @@ function spaceinvaders() {
     const
       exceededBound = curState.leftMostAlien ? 
                         curState.rightMostAlien ?
-                          curState.leftMostAlien.xPos <= VIS_LEFT_BOUND || curState.rightMostAlien.xPos >= VIS_RIGHT_BOUND 
+                          curState.leftMostAlien.xPos <= canvasLeftBound || curState.rightMostAlien.xPos >= canvasRightBound 
                         : null
                       : null
 
@@ -347,7 +347,7 @@ function spaceinvaders() {
 
   function resetAlienBoundaries(curState: State): State {
     const
-      flatList = flatMap(curState.activeAliens, I_COMB),
+      flatList = flatMap(curState.activeAliens, iComb),
       lMostAlien = findBoundary(flatList.slice(1), flatList[0], "<"),
       rMostAlien = findBoundary(flatList.slice(1), flatList[0], ">")
 
@@ -379,10 +379,10 @@ function spaceinvaders() {
 
   function latChange(inpBody: Body, horiChange: number): number {    
     const 
-      leftExceeded = inpBody.xPos + horiChange <= P_LEFT_BOUND,
-      rightExceeded = inpBody.xPos + horiChange >= P_RIGHT_BOUND,
-      leftStartPos = P_LEFT_BOUND + (inpBody.xPos + horiChange) - P_RIGHT_BOUND,
-      rightStartPos = CANVAS_WIDTH - (inpBody.xPos + PLAYER_WIDTH),
+      leftExceeded = inpBody.xPos + horiChange <= playerLeftBound,
+      rightExceeded = inpBody.xPos + horiChange >= playerRightBound,
+      leftStartPos = playerLeftBound + (inpBody.xPos + horiChange) - playerRightBound,
+      rightStartPos = canvasWidth - (inpBody.xPos + playerWidth),
       adjLateralPos = leftExceeded ? rightStartPos : rightExceeded ? leftStartPos : inpBody.xPos + horiChange
 
     return adjLateralPos
@@ -421,15 +421,15 @@ function spaceinvaders() {
           uncreatedEShots = curState.activeEShots.filter(uncreatedPredicate),
           createdPShots = curState.activePShots.filter(aShot => !uncreatedPShots.includes(aShot)),
           createdEShots = curState.activeEShots.filter(aShot => !uncreatedEShots.includes(aShot)),
-          aliveAliens = curState.activeAliens.map(alienList => alienList.filter(NOT_NULL))
+          aliveAliens = curState.activeAliens.map(alienList => alienList.filter(notNull))
 
     // Update the current score of the game
 
-    GAME_SCORE.innerHTML = `Score | ${curState.gameScore}`
+    gameScore.innerHTML = `Score | ${curState.gameScore}`
 
     // Update the number of lives that the player has
 
-    PLAYER_LIVES.innerHTML = `Lives | ${curState.playerLives}`
+    playerLives.innerHTML = `Lives | ${curState.playerLives}`
     
     // Update the position of the player visually
 
@@ -438,7 +438,7 @@ function spaceinvaders() {
     // Create the uncreated 'shot' element(s) on the document 
 
     uncreatedPShots.forEach(shotBody => createElement(shotBody, "white", 10))
-    uncreatedEShots.forEach(shotBody => createElement(shotBody, "white", -5, SHOT_GROUP))
+    uncreatedEShots.forEach(shotBody => createElement(shotBody, "white", -5, shotGroup))
 
     // Update the position of created shot element(s)
 
@@ -452,7 +452,7 @@ function spaceinvaders() {
     // Remove the Shots that have 'expired'
 
     curState.expiredPShots.forEach(pShot => removeElement(pShot))
-    curState.expiredEShots.forEach(eShot => removeElement(eShot, SHOT_GROUP))
+    curState.expiredEShots.forEach(eShot => removeElement(eShot, shotGroup))
 
     // Check if the game has ended
 
@@ -472,19 +472,19 @@ function spaceinvaders() {
 
   function displayText(inpText: string) {
     const
-      displayTextElement = document.createElementNS(SVG_CANVAS.namespaceURI, "text")!
+      displayTextElement = document.createElementNS(svgCanvas.namespaceURI, "text")!
 
-    displayTextElement.setAttribute("x", String(CANVAS_WIDTH / 3))
-    displayTextElement.setAttribute("y", String(CANVAS_HEIGHT / 2))
+    displayTextElement.setAttribute("x", String(canvasWidth / 3))
+    displayTextElement.setAttribute("y", String(canvasHeight / 2))
     displayTextElement.setAttribute("font-family", "niceFont")
     displayTextElement.setAttribute("font-size", "40")
     displayTextElement.setAttribute("fill", "white")
     displayTextElement.innerHTML = inpText
 
-    SVG_CANVAS.appendChild(displayTextElement)
+    svgCanvas.appendChild(displayTextElement)
   }
 
-  function removeElement(inpBody: Body, parentNode: Element = SVG_CANVAS): void {
+  function removeElement(inpBody: Body, parentNode: Element = svgCanvas): void {
     const inpElement = document.getElementById(String(inpBody.bodyId))
 
     if (inpElement) {
@@ -492,9 +492,9 @@ function spaceinvaders() {
     }
   }
 
-  function createElement(elementBody: Body, elementColour: string, yInc: number = 0, parentNode: Element = SVG_CANVAS, prePend: boolean = false): void {
+  function createElement(elementBody: Body, elementColour: string, yInc: number = 0, parentNode: Element = svgCanvas, prePend: boolean = false): void {
     const 
-      createdElement = document.createElementNS(SVG_CANVAS.namespaceURI, "rect")!
+      createdElement = document.createElementNS(svgCanvas.namespaceURI, "rect")!
 
     createdElement.setAttribute("style", `fill: ${elementColour}`)
     createdElement.setAttribute("width", String(elementBody.bodyWidth))
@@ -533,12 +533,12 @@ function spaceinvaders() {
       bodiesCollided = ([bOne, bTwo]) => collisionCheck(bOne, bTwo),
       checkTruth = (accBoo: boolean, curBoo: boolean) => accBoo || curBoo,
       shieldSubmerge = ([eBody, sBody]) => collisionFormula([eBody.xPos, eBody.yPos], [sBody.xPos, sBody.yPos], sBody.bodyHeight, sBody.bodyWidth),
-      notNullAliens = curState.activeAliens.map(subAlienList => subAlienList.filter(NOT_NULL)),
-      allAliensAndShots = flatMap(curState.activePShots.map(aShot => cartesianProduct(aShot, flatMap(notNullAliens, I_COMB))), I_COMB),
-      allShotsAndShots = flatMap(curState.activePShots.map(aShot => cartesianProduct(aShot, curState.activeEShots)), I_COMB),
-      allPShotsAndShields = flatMap(curState.gameShields.map(aShield => cartesianProduct(aShield, curState.activePShots)), I_COMB),
-      allEShotsAndShields = flatMap(curState.gameShields.map(aShield => cartesianProduct(aShield, curState.activeEShots)), I_COMB),
-      allAliensAndShields = flatMap(notNullAliens.map(alienList => curState.gameShields.map(aShield => cartesianProduct(aShield, alienList))), I_COMB)
+      notNullAliens = curState.activeAliens.map(subAlienList => subAlienList.filter(notNull)),
+      allAliensAndShots = flatMap(curState.activePShots.map(aShot => cartesianProduct(aShot, flatMap(notNullAliens, iComb))), iComb),
+      allShotsAndShots = flatMap(curState.activePShots.map(aShot => cartesianProduct(aShot, curState.activeEShots)), iComb),
+      allPShotsAndShields = flatMap(curState.gameShields.map(aShield => cartesianProduct(aShield, curState.activePShots)), iComb),
+      allEShotsAndShields = flatMap(curState.gameShields.map(aShield => cartesianProduct(aShield, curState.activeEShots)), iComb),
+      allAliensAndShields = flatMap(notNullAliens.map(alienList => curState.gameShields.map(aShield => cartesianProduct(aShield, alienList))), iComb)
 
     const 
       collidedAliensAndShots = allAliensAndShots.filter(bodiesCollided),
@@ -547,7 +547,7 @@ function spaceinvaders() {
       collidedEShotsOnPlayer = curState.activeEShots.filter(shotBody => bodiesCollided([curState.statePlayer, shotBody])),
       collidedShotsAndShots = allShotsAndShots.filter(bodiesCollided),
       collidedPShotsOnShields = allPShotsAndShields.filter(([aShot, aShield]) => bodiesCollided([aShot, aShield.shieldBody])).map(([pShot, _]) => pShot),
-      fCollidedAliensAndShields = flatMap(allAliensAndShields.map(subList  => subList.filter(([anAlien, aShield]) => shieldSubmerge([anAlien, aShield.shieldBody]))), I_COMB).filter(duoList => duoList.length > 0),
+      fCollidedAliensAndShields = flatMap(allAliensAndShields.map(subList  => subList.filter(([anAlien, aShield]) => shieldSubmerge([anAlien, aShield.shieldBody]))), iComb).filter(duoList => duoList.length > 0),
       pCollidedAliensAndShields = allAliensAndShields.map(subList => subList.filter(([anAlien, aShield]) => shieldSubmerge([aShield.shieldBody, anAlien]))).filter(duoList => duoList.length > 0),
       
       // Check for Shots that the Shield(s) have never experinced 
@@ -567,7 +567,7 @@ function spaceinvaders() {
     collidedAliens.forEach((eBody: Body) => removeElement(eBody))
     collidedPShots.forEach((pShot: Body) => removeElement(pShot))
 
-    collidedEShotsOnPlayer.forEach((eShot: Body) => removeElement(eShot, SHOT_GROUP))
+    collidedEShotsOnPlayer.forEach((eShot: Body) => removeElement(eShot, shotGroup))
 
     // Remove all Shots that have collided with other Shots
 
@@ -612,7 +612,7 @@ function spaceinvaders() {
 
       // Check if an Alien has exceeded the screen
 
-      exceededScreen = notNullAliens.filter(subList => subList.length > 0).map(subList => subList.map(subAlien => subAlien.yPos > CANVAS_HEIGHT).reduce(checkTruth), false).reduce(checkTruth, false)
+      exceededScreen = notNullAliens.filter(subList => subList.length > 0).map(subList => subList.map(subAlien => subAlien.yPos > canvasHeight).reduce(checkTruth), false).reduce(checkTruth, false)
 
     // Remove all fully collided shields
 
@@ -624,12 +624,12 @@ function spaceinvaders() {
       playerColour =
         collidedEShotsOnPlayer.length > 0 ?
           curState.playerLives == 3 ?
-            TWO_LIVES_COLOUR
+            twoLivesColour
           :
           curState.playerLives == 2 ?
-            ONE_LIFE_COLOUR
+            oneLifeColour
           :
-            DEAD_COLOUR
+            deadColour
         :
           null
           
@@ -652,7 +652,7 @@ function spaceinvaders() {
   }
 
   function getAlienCount(twoDAlienList: ReadonlyArray<ReadonlyArray<Body>>) {
-    return twoDAlienList.map(subAlienList => subAlienList.filter(NOT_NULL)).reduce((accLength, subList) => accLength + subList.length, 0)
+    return twoDAlienList.map(subAlienList => subAlienList.filter(notNull)).reduce((accLength, subList) => accLength + subList.length, 0)
   }
 
   function removeCollidedShots(shotList: ReadonlyArray<Body>) {
@@ -660,7 +660,7 @@ function spaceinvaders() {
     // An Alien's Shot is at index - and a Player's Shot is at index 1
 
     shotList[0] ?
-      removeElement(shotList[0], SHOT_GROUP)
+      removeElement(shotList[0], shotGroup)
     :
       null
 
