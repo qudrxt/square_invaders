@@ -645,17 +645,15 @@ function spaceinvaders() {
 
   function removeCollidedShots(shotList: ReadonlyArray<Body>) {
 
-    // An Alien's Shot is at index - and a Player's Shot is at index 1
+    // An Alien's Shot is at index 0 and a Player's Shot is at index 1
 
-    shotList[0] ?
+    if (shotList[0]) {
       removeElement(shotList[0], shotGroup)
-    :
-      null
+    }
 
-    shotList[1] ? 
+    if (shotList[1]) {
       removeElement(shotList[1])
-    :
-      null
+    }
   }
 
   function checkPrevShieldHit(subList: [Body, Shield]) {
