@@ -101,7 +101,7 @@ function spaceinvaders() {
     stopLeftStep = observeKey("keyup", "ArrowLeft", true, () => new Step(0, 0)),
     startRightStep = observeKey("keydown", "ArrowRight", true, () => new Step(5, 0)),
     stopRightStep = observeKey("keyup", "ArrowRight", true, () => new Step(0, 0)),
-    startShoot = observeKey('keydown','Space', false, () => new Shoot(true))
+    startShoot = observeKey('keydown', 'Space', false, () => new Shoot(true))
     
   // Create the shield elements onto the screen
 
@@ -153,7 +153,7 @@ function spaceinvaders() {
 
     // Step denotes a move of the Player or Alien body - otherwise Shot
 
-    return inpBody ? e instanceof Step  ? 
+    return inpBody ? e instanceof Step ? 
         {...inpBody, 
           xPos: latChange(inpBody, e.horiStep),
           yPos: inpBody.yPos + e.vertStep} 
@@ -191,7 +191,7 @@ function spaceinvaders() {
           statePlayer: moveBody(curState.statePlayer, e)
         } : 
                         
-        // Invoke a shooting threshold of 10 active shots per 10ms
+        // Invoke a shooting threshold of 2 active shots - visible on the screen
 
         e instanceof Shoot ? 
           curState.activePShots.length < 2 ? {...curState, 
