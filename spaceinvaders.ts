@@ -60,6 +60,9 @@ function spaceinvaders() {
     twoLivesColour = "#000099",
     oneLifeColour = "#00004d",
     deadColour = "#292924",
+    shieldColour = "#00ff00",
+    touchedShieldColour = "#00b300",
+    enemyColour = "ff0000",
     svgCanvas = document.getElementById("canvas")!,
     shotGroup = document.getElementById("shotGroup"),
     gameScore = document.getElementById("gameScore")!,
@@ -105,14 +108,14 @@ function spaceinvaders() {
     
   // Create the shield elements onto the screen
 
-  initState.gameShields.forEach(gameShield => createElement(gameShield.shieldBody, "#00ff00", 0, shotGroup, true))
+  initState.gameShields.forEach(gameShield => createElement(gameShield.shieldBody, shieldColour, 0, shotGroup, true))
 
   // Create the uncreated 'Alien' elements onto the document
   
   setAliens(initState)
 
   function setAliens(curState: State) {
-    flatMap(curState.activeAliens, iComb).forEach((subBody: Body) => createElement(subBody, "red"))
+    flatMap(curState.activeAliens, iComb).forEach((subBody: Body) => createElement(subBody, enemyColour))
   }
 
   function createAliens() {
@@ -575,11 +578,11 @@ function spaceinvaders() {
 
     // Refill all active shields to light-green
 
-    curState.gameShields.forEach(aShield => altElementColour(String(aShield.shieldBody.bodyId), "#00ff00"))
+    curState.gameShields.forEach(aShield => altElementColour(String(aShield.shieldBody.bodyId), shieldColour))
 
     // Mark all of the Shields that have partially collided with the Aliens(s) with a darker shade of green
 
-    pCollidedAliensAndShields.forEach(subList => subList.forEach(([_, aShield]) => altElementColour(String(aShield.shieldBody.bodyId), "#00b300")))
+    pCollidedAliensAndShields.forEach(subList => subList.forEach(([_, aShield]) => altElementColour(String(aShield.shieldBody.bodyId), touchedShieldColour)))
 
     // Remove all of the Player's shots that have collided with Shield(s)
 
@@ -587,7 +590,7 @@ function spaceinvaders() {
 
     // Mark all Alien shots that have collided with the Shield(s)
 
-    collidedEShotsOnShields.forEach((aShot: Body) => altElementColour(String(aShot.bodyId), "#292924"))
+    collidedEShotsOnShields.forEach((aShot: Body) => altElementColour(String(aShot.bodyId), deadColour))
 
     // Add the coordinates of the Shot(s) that have collided with a Shield for future disregard
 
