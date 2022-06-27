@@ -50,6 +50,7 @@ function spaceinvaders() {
   const 
     notNull = <T>(subValue: T) => subValue != null,
     playerId = 0,
+    playerEleId = "player",
     pShotWidth = 2,
     pShotHeight = 15,
     eShotWidth = 3,
@@ -632,7 +633,7 @@ function spaceinvaders() {
           null
           
     collidedEShotsOnPlayer.length > 0 ?
-      altElementColour("player", playerColour)
+      altElementColour(playerEleId, playerColour)
     :
       null
 
