@@ -232,8 +232,7 @@ function spaceinvaders() {
   }
 
   function incrementId(inpState: State): State {
-    return {...inpState,
-      idSequence: inpState.idSequence + 1}
+    return {...inpState, idSequence: inpState.idSequence + 1}
   }
 
   function detClosedAlien(alienList: ReadonlyArray<Body>, curClosest: Body, playerXPos: number): Body {
@@ -389,8 +388,7 @@ function spaceinvaders() {
   }
 
   function createShield(inpShieldBody: Body): Shield {
-    return {shieldBody: inpShieldBody,
-      shieldHits: []}
+    return {shieldBody: inpShieldBody, shieldHits: []}
   }
 
   function createBody(curState: State, inpXPos: number, inpYPos: number, inpWidth: number, inpHeight: number, fallBackId: number): Body {
@@ -456,10 +454,9 @@ function spaceinvaders() {
 
     // Check if the game has ended
 
-    curState.gameOver ? 
+    if (curState.gameOver) {
       gameOverRoutine()
-    :
-      null 
+    }
   }
 
   function gameOverRoutine() {
