@@ -1,5 +1,5 @@
 # Square-Invaders ##
-Developed with the TypeScript language and the functional reactive programming paradigm to replicate the iconic Space Invaders game. This project was initially developed without the usage of version control.
+Developed with the TypeScript language and the functional reactive programming paradigm to replicate the iconic Space Invaders game. This project was initially developed without the usage of version control and takes inspiration from Tim Dwyer's *Asteroid* implementation that can be viewed [here](https://stackblitz.com/edit/asteroids05?file=index.ts).
 
 ## Preview ##
 ![](/gamePreview.png)
