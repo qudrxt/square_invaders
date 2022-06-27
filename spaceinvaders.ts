@@ -62,7 +62,8 @@ function spaceinvaders() {
     deadColour = "#292924",
     shieldColour = "#00ff00",
     touchedShieldColour = "#00b300",
-    enemyColour = "ff0000",
+    enemyColour = "red",
+    shotColour = "white",
     svgCanvas = document.getElementById("canvas")!,
     shotGroup = document.getElementById("shotGroup"),
     gameScore = document.getElementById("gameScore")!,
@@ -436,8 +437,8 @@ function spaceinvaders() {
 
     // Create the uncreated 'shot' element(s) on the document 
 
-    uncreatedPShots.forEach(shotBody => createElement(shotBody, "white", 10))
-    uncreatedEShots.forEach(shotBody => createElement(shotBody, "white", -5, shotGroup))
+    uncreatedPShots.forEach(shotBody => createElement(shotBody, shotColour, 10))
+    uncreatedEShots.forEach(shotBody => createElement(shotBody, shotColour, -5, shotGroup))
 
     // Update the position of created shot element(s)
 
