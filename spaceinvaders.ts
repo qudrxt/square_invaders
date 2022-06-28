@@ -1,52 +1,52 @@
 import { fromEvent, interval } from 'rxjs'; 
 import { map, filter, scan, merge } from 'rxjs/operators';
 
-function spaceinvaders() {
-  class Step { constructor(public readonly horiStep: number, public readonly vertStep: number) {} }
-  class Shoot { constructor(public readonly playerShot: boolean) {} }
-  
-  type Event = "keydown" | "keyup"
-  type Key = "ArrowLeft" | "ArrowRight" | "Space"
-  
-  type Shield = Readonly<{
-    shieldBody: Body;
-    shieldHits: ReadonlyArray<ReadonlyArray<number>>
-  }>
+class Step { constructor(public readonly horiStep: number, public readonly vertStep: number) {} }
+class Shoot { constructor(public readonly playerShot: boolean) {} }
 
-  type Body = Readonly<{
+type Event = "keydown" | "keyup"
+type Key = "ArrowLeft" | "ArrowRight" | "Space"
 
-    // Inspired by Tim Dwyer's Astroid implementation
+type Shield = Readonly<{
+  shieldBody: Body;
+  shieldHits: ReadonlyArray<ReadonlyArray<number>>
+}>
 
-    bodyId: number;
-    xPos: number;
-    yPos: number;
-    bodyWidth: number;
-    bodyHeight: number;
-  }>
-  
-  type State = Readonly<{ 
+type Body = Readonly<{
 
-    // Inspired by Tim Dwyer's Astroid implementation
+  // Inspired by Tim Dwyer's Astroid implementation
 
-    statePlayer: Body;
-    activePShots: ReadonlyArray<Body>;
-    expiredPShots: ReadonlyArray<Body>; 
-    activeAliens: ReadonlyArray<ReadonlyArray<Body>>;
-    activeEShots: ReadonlyArray<Body>;
-    expiredEShots: ReadonlyArray<Body>;
-    bottomAliens: ReadonlyArray<Body>;
-    leftMostAlien: Body;
-    rightMostAlien: Body;
-    gameShields: ReadonlyArray<Shield>;
-    emenyLatDirection: number;
-    alienDownShift: boolean;
-    idSequence: number;
-    gameScore: number;
-    playerLives: number;
-    gameOver: boolean;
-    resetAliens: boolean
-  }>
+  bodyId: number;
+  xPos: number;
+  yPos: number;
+  bodyWidth: number;
+  bodyHeight: number;
+}>
 
+type State = Readonly<{ 
+
+  // Inspired by Tim Dwyer's Astroid implementation
+
+  statePlayer: Body;
+  activePShots: ReadonlyArray<Body>;
+  expiredPShots: ReadonlyArray<Body>; 
+  activeAliens: ReadonlyArray<ReadonlyArray<Body>>;
+  activeEShots: ReadonlyArray<Body>;
+  expiredEShots: ReadonlyArray<Body>;
+  bottomAliens: ReadonlyArray<Body>;
+  leftMostAlien: Body;
+  rightMostAlien: Body;
+  gameShields: ReadonlyArray<Shield>;
+  emenyLatDirection: number;
+  alienDownShift: boolean;
+  idSequence: number;
+  gameScore: number;
+  playerLives: number;
+  gameOver: boolean;
+  resetAliens: boolean
+}>
+
+function spaceinvaders() {  
   const 
     notNull = <T>(subValue: T) => subValue != null,
     playerId = 0,
