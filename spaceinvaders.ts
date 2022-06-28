@@ -377,7 +377,7 @@ function spaceinvaders() {
 
   function findBoundary(alienList: ReadonlyArray<Body>, boundaryAlien: Body, alienComparator: String): Body {    
 
-    // Ternary inception
+    // Determines the left or rightmost enemy Body
 
     return alienList.length > 0 ?
       alienList[0] && boundaryAlien ?
