@@ -46,6 +46,25 @@ type State = Readonly<{
   resetAliens: boolean
 }>
 
+function createShield(inpShieldBody: Body): Shield {
+  return {shieldBody: inpShieldBody, shieldHits: []}
+}
+
+function createBody(curState: State, inpXPos: number, inpYPos: number, inpWidth: number, inpHeight: number, fallBackId: number): Body {
+
+  // Inspired by Tim Dwyer's Astroid implementation
+  
+  // fallBack argument is used for Player and Alien Body instantiations - initState is null at that time
+
+  return {
+    bodyId: curState ? curState.idSequence : fallBackId,
+    xPos: inpXPos,
+    yPos: inpYPos,
+    bodyWidth: inpWidth,
+    bodyHeight: inpHeight
+  }
+}
+
 function spaceinvaders() {  
   const 
     notNull = <T>(subValue: T) => subValue != null,
@@ -384,25 +403,6 @@ function spaceinvaders() {
       adjLateralPos = leftExceeded ? rightStartPos : rightExceeded ? leftStartPos : inpBody.xPos + horiChange
 
     return adjLateralPos
-  }
-
-  function createShield(inpShieldBody: Body): Shield {
-    return {shieldBody: inpShieldBody, shieldHits: []}
-  }
-
-  function createBody(curState: State, inpXPos: number, inpYPos: number, inpWidth: number, inpHeight: number, fallBackId: number): Body {
-
-    // Inspired by Tim Dwyer's Astroid implementation
-    
-    // fallBack argument is used for Player and Alien Body instantiations - initState is null at that time
-
-    return {
-      bodyId: curState ? curState.idSequence : fallBackId,
-      xPos: inpXPos,
-      yPos: inpYPos,
-      bodyWidth: inpWidth,
-      bodyHeight: inpHeight
-    }
   }
 
   function moveShot(inpBody: Body, yInc: number): Body {
