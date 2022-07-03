@@ -146,8 +146,9 @@ function spaceinvaders() {
 
     // xPos centers the Shot between the Player, yPos elevates the Shot above the Player
 
-    const xPos = curState.statePlayer.xPos + playerWidth / 2 - pShotWidth / 2,
-          yPos = curState.statePlayer.yPos - 5
+    const 
+      xPos = curState.statePlayer.xPos + playerWidth / 2 - pShotWidth / 2,
+      yPos = curState.statePlayer.yPos - 5
 
     return createBody(curState, xPos, yPos, pShotWidth, pShotHeight, null)
   }
@@ -236,8 +237,8 @@ function spaceinvaders() {
   }
 
   function createEShotBody(curState: State) {
-    const closestAlien = 
-      detClosedAlien(curState.bottomAliens.slice(1), curState.bottomAliens[0], curState.statePlayer.xPos)
+    const 
+      closestAlien = detClosedAlien(curState.bottomAliens.slice(1), curState.bottomAliens[0], curState.statePlayer.xPos)
 
     const 
       shotChance = Math.random(),
@@ -351,13 +352,13 @@ function spaceinvaders() {
   }
 
   function resetBottomAliens(alienList: ReadonlyArray<ReadonlyArray<Body>>, accBottomList = [], curInd = 0): ReadonlyArray<Body> {
-    return curInd == 9 ? accBottomList :
-      resetBottomAliens(alienList, accBottomList.concat(getBottomAlien(alienList, curInd)), curInd + 1)
+    return curInd == 9 ? accBottomList : resetBottomAliens(alienList, accBottomList.concat(getBottomAlien(alienList, curInd)), curInd + 1)
   } 
 
   function getBottomAlien(alienList: ReadonlyArray<ReadonlyArray<Body>>, colInd: number, bottomAlien: Body = null, rowInd: number = 0): Body {
-    const subAlien = alienList[rowInd][colInd],
-          propAlien = subAlien ? subAlien : bottomAlien
+    const 
+      subAlien = alienList[rowInd][colInd],
+      propAlien = subAlien ? subAlien : bottomAlien
 
     return rowInd == 2 ? propAlien : getBottomAlien(alienList, colInd, propAlien, rowInd + 1) 
   } 
@@ -413,12 +414,13 @@ function spaceinvaders() {
 
     // Inspired by Tim Dwyer's Astroid implementation
 
-    const uncreatedPredicate = (aBody: Body) => !document.getElementById(String(aBody.bodyId)),
-          uncreatedPShots = curState.activePShots.filter(uncreatedPredicate),
-          uncreatedEShots = curState.activeEShots.filter(uncreatedPredicate),
-          createdPShots = curState.activePShots.filter(aShot => !uncreatedPShots.includes(aShot)),
-          createdEShots = curState.activeEShots.filter(aShot => !uncreatedEShots.includes(aShot)),
-          aliveAliens = curState.activeAliens.map(alienList => alienList.filter(notNull))
+    const 
+      uncreatedPredicate = (aBody: Body) => !document.getElementById(String(aBody.bodyId)),
+      uncreatedPShots = curState.activePShots.filter(uncreatedPredicate),
+      uncreatedEShots = curState.activeEShots.filter(uncreatedPredicate),
+      createdPShots = curState.activePShots.filter(aShot => !uncreatedPShots.includes(aShot)),
+      createdEShots = curState.activeEShots.filter(aShot => !uncreatedEShots.includes(aShot)),
+      aliveAliens = curState.activeAliens.map(alienList => alienList.filter(notNull))
 
     // Update the current score of the game
 
@@ -481,7 +483,8 @@ function spaceinvaders() {
   }
 
   function removeElement(inpBody: Body, parentNode: Element = svgCanvas): void {
-    const inpElement = document.getElementById(String(inpBody.bodyId))
+    const 
+      inpElement = document.getElementById(String(inpBody.bodyId))
 
     if (inpElement) {
       parentNode.removeChild(inpElement)
@@ -620,7 +623,8 @@ function spaceinvaders() {
     // Change the colour of the player if it has been hit
           
     if (collidedEShotsOnPlayer.length > 0) {
-      const playerColour = curState.playerLives == 3 ? twoLivesColour : curState.playerLives == 2 ? oneLifeColour : deadColour
+      const 
+        playerColour = curState.playerLives == 3 ? twoLivesColour : curState.playerLives == 2 ? oneLifeColour : deadColour
 
       altElementColour(playerEleId, playerColour)
     }
@@ -673,8 +677,7 @@ function spaceinvaders() {
   }
 
   function addShotCoord(inpShield: Shield, inpShot: Body): Shield {
-    return {...inpShield,
-      shieldHits: inpShield.shieldHits.concat([[inpShot.xPos, inpShot.yPos]])}
+    return {...inpShield, shieldHits: inpShield.shieldHits.concat([[inpShot.xPos, inpShot.yPos]])}
   }
 
   function altElementColour(elementId: string, altColour: string) {
@@ -729,6 +732,6 @@ function spaceinvaders() {
 }
   
 if (typeof window != 'undefined')
-  window.onload = ()=>{
+  window.onload = () => {
     spaceinvaders();
   }
