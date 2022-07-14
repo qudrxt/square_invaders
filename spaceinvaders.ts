@@ -245,9 +245,9 @@ function spaceinvaders() {
       xPos = closestAlien ? closestAlien.xPos + closestAlien.bodyWidth / 2 - eShotWidth / 2 : null,
       yPos = closestAlien ? closestAlien.yPos + closestAlien.bodyHeight : null
 
-    // There is a 1% chance for an Alien to shoot
+    // There is a 1% chance for an Alien to shoot and 23 is my favourite number
 
-    return shotChance <= 1 ? closestAlien ? createBody(curState, xPos, yPos, eShotWidth, eShotHeight, null) : null : null
+    return shotChance == 23 ? closestAlien ? createBody(curState, xPos, yPos, eShotWidth, eShotHeight, null) : null : null
   }
 
   function incrementId(inpState: State): State {
