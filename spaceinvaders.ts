@@ -241,13 +241,13 @@ function spaceinvaders() {
       closestAlien = detClosedAlien(curState.bottomAliens.slice(1), curState.bottomAliens[0], curState.statePlayer.xPos)
 
     const 
-      shotChance = Math.random(),
+      shotChance = Math.floor(Math.random() * 100),
       xPos = closestAlien ? closestAlien.xPos + closestAlien.bodyWidth / 2 - eShotWidth / 2 : null,
       yPos = closestAlien ? closestAlien.yPos + closestAlien.bodyHeight : null
 
     // There is a 1% chance for an Alien to shoot
 
-    return shotChance <= 0.01 ? closestAlien ? createBody(curState, xPos, yPos, eShotWidth, eShotHeight, null) : null : null
+    return shotChance <= 1 ? closestAlien ? createBody(curState, xPos, yPos, eShotWidth, eShotHeight, null) : null : null
   }
 
   function incrementId(inpState: State): State {
